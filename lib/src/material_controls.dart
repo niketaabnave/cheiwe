@@ -270,11 +270,11 @@ class _MaterialControlsState extends State<MaterialControls> {
             );
           }
           else {
-          Navigator.of(context)
-              .push(new MaterialPageRoute(
-            builder: (BuildContext context) => SubtitlePicker(controller),
-            fullscreenDialog: true,
-          ));
+//          Navigator.of(context)
+//              .push(new MaterialPageRoute(
+//            builder: (BuildContext context) => SubtitlePicker(controller),
+//            fullscreenDialog: true,
+//          ));
           }
         }
       },
