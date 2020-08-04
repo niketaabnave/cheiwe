@@ -14,12 +14,15 @@ class PlayerWithControls extends StatelessWidget {
   Widget build(BuildContext context) {
     final ChewieController chewieController = ChewieController.of(context);
 
-    return Center(
-      child: Container(
+    return
+      //Center(
+      Align(
+        alignment: Alignment.topCenter,
+        child: Container(
         width: MediaQuery.of(context).size.width,
         child: AspectRatio(
           aspectRatio:
-          chewieController.aspectRatio ?? _calculateAspectRatio(context),
+              chewieController.aspectRatio ?? _calculateAspectRatio(context),
           child: _buildPlayerWithControls(chewieController, context),
         ),
       ),
@@ -50,18 +53,18 @@ class PlayerWithControls extends StatelessWidget {
   }
 
   Widget _buildControls(
-      BuildContext context,
-      ChewieController chewieController,
-      ) {
+    BuildContext context,
+    ChewieController chewieController,
+  ) {
     return chewieController.showControls
         ? chewieController.customControls != null
-        ? chewieController.customControls
-        : Theme.of(context).platform == TargetPlatform.android
-        ? MaterialControls()
-        : CupertinoControls(
-      backgroundColor: Color.fromRGBO(41, 41, 41, 0.7),
-      iconColor: Color.fromARGB(255, 200, 200, 200),
-    )
+            ? chewieController.customControls
+            : Theme.of(context).platform == TargetPlatform.android
+                ? MaterialControls()
+                : CupertinoControls(
+                    backgroundColor: Color.fromRGBO(41, 41, 41, 0.7),
+                    iconColor: Color.fromARGB(255, 200, 200, 200),
+                  )
         : Container();
   }
 
