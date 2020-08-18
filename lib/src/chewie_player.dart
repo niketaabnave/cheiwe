@@ -71,7 +71,7 @@ class ChewieState extends State<Chewie> {
   Widget build(BuildContext context) {
     return _ChewieControllerProvider(
       controller: widget.controller,
-      child: PlayerWithControls(),
+      child: PlayerWithControls(isFullScreen: _isFullScreen),
     );
   }
 
@@ -109,7 +109,7 @@ class ChewieState extends State<Chewie> {
   ) {
     var controllerProvider = _ChewieControllerProvider(
       controller: widget.controller,
-      child: PlayerWithControls(),
+      child: PlayerWithControls(isFullScreen: _isFullScreen),
     );
 
     if (widget.controller.routePageBuilder == null) {
@@ -128,29 +128,29 @@ class ChewieState extends State<Chewie> {
 
     SystemChrome.setEnabledSystemUIOverlays([]);
     //if (isAndroid) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     //}
 
     if (!widget.controller.allowedScreenSleep) {
       Screen.keepOn(true);
     }
 
-    await Navigator.of(context).push(route);
-    _isFullScreen = false;
-    widget.controller.exitFullScreen();
+//    await Navigator.of(context).push(route);
+//    _isFullScreen = false;
+//    widget.controller.exitFullScreen();
 
     bool isKeptOn = await Screen.isKeptOn;
     if (isKeptOn) {
       Screen.keepOn(false);
     }
 
-    SystemChrome.setEnabledSystemUIOverlays(
-        widget.controller.systemOverlaysAfterFullScreen);
-    SystemChrome.setPreferredOrientations(
-        widget.controller.deviceOrientationsAfterFullScreen);
+//    SystemChrome.setEnabledSystemUIOverlays(
+//        widget.controller.systemOverlaysAfterFullScreen);
+//    SystemChrome.setPreferredOrientations(
+//        widget.controller.deviceOrientationsAfterFullScreen);
   }
 }
 
