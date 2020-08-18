@@ -64,6 +64,9 @@ class ChewieState extends State<Chewie> {
     } else if (_isFullScreen) {
       Navigator.of(context).pop();
       _isFullScreen = false;
+    }else{
+      _isFullScreen = false;
+      await _halfFullScreenWidget(context);
     }
   }
 
@@ -88,6 +91,19 @@ class ChewieState extends State<Chewie> {
       ),
     );
   }
+  Widget _buildHalfScreenVideo(
+      BuildContext context,
+      Animation<double> animation,
+      _ChewieControllerProvider controllerProvider) {
+    return Scaffold(
+      resizeToAvoidBottomPadding: true,
+      body: Container(
+        alignment: Alignment.center,
+        color: Colors.white,
+        child: controllerProvider,
+      ),
+    );
+  }
 
   AnimatedWidget _defaultRoutePageBuilder(
       BuildContext context,
@@ -97,9 +113,26 @@ class ChewieState extends State<Chewie> {
     return AnimatedBuilder(
       animation: animation,
       builder: (BuildContext context, Widget child) {
-        return _buildFullScreenVideo(context, animation, controllerProvider);
+        return  _isFullScreen?_buildFullScreenVideo(context, animation, controllerProvider):_buildHalfScreenVideo(context, animation, controllerProvider);
       },
     );
+  }
+  Widget _halfScreenRoutePageBuilder(
+      BuildContext context,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+      ) {
+    var controllerProvider = _ChewieControllerProvider(
+      controller: widget.controller,
+      child: PlayerWithControls(isFullScreen: _isFullScreen),
+    );
+
+    if (widget.controller.routePageBuilder == null) {
+      return _defaultRoutePageBuilder(
+          context, animation, secondaryAnimation, controllerProvider);
+    }
+    return widget.controller.routePageBuilder(
+        context, animation, secondaryAnimation, controllerProvider);
   }
 
   Widget _fullScreenRoutePageBuilder(
@@ -120,6 +153,21 @@ class ChewieState extends State<Chewie> {
         context, animation, secondaryAnimation, controllerProvider);
   }
 
+  Future<dynamic> _halfFullScreenWidget(BuildContext context) async {
+    //final isAndroid = Theme.of(context).platform == TargetPlatform.android;
+    final TransitionRoute<Null> route = PageRouteBuilder<Null>(
+      pageBuilder: _halfScreenRoutePageBuilder,
+    );
+
+
+    if (!widget.controller.allowedScreenSleep) {
+      Screen.keepOn(true);
+    }
+
+    await Navigator.of(context).push(route);
+
+  }
+
   Future<dynamic> _pushFullScreenWidget(BuildContext context) async {
     //final isAndroid = Theme.of(context).platform == TargetPlatform.android;
     final TransitionRoute<Null> route = PageRouteBuilder<Null>(
@@ -138,19 +186,19 @@ class ChewieState extends State<Chewie> {
       Screen.keepOn(true);
     }
 
-//    await Navigator.of(context).push(route);
-//    _isFullScreen = false;
-//    widget.controller.exitFullScreen();
+    await Navigator.of(context).push(route);
+    _isFullScreen = false;
+    widget.controller.exitFullScreen();
 
     bool isKeptOn = await Screen.isKeptOn;
     if (isKeptOn) {
       Screen.keepOn(false);
     }
 
-//    SystemChrome.setEnabledSystemUIOverlays(
-//        widget.controller.systemOverlaysAfterFullScreen);
-//    SystemChrome.setPreferredOrientations(
-//        widget.controller.deviceOrientationsAfterFullScreen);
+    SystemChrome.setEnabledSystemUIOverlays(
+        widget.controller.systemOverlaysAfterFullScreen);
+    SystemChrome.setPreferredOrientations(
+        widget.controller.deviceOrientationsAfterFullScreen);
   }
 }
 
