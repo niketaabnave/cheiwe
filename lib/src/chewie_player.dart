@@ -22,11 +22,13 @@ class Chewie extends StatefulWidget {
   Chewie({
     Key key,
     this.controller,
+    this.mainPage,
   })  : assert(controller != null, 'You must provide a chewie controller'),
         super(key: key);
 
   /// The [ChewieController]
   final ChewieController controller;
+  final Widget mainPage;
 
   @override
   ChewieState createState() {
@@ -95,9 +97,12 @@ class ChewieState extends State<Chewie> {
       BuildContext context,
       Animation<double> animation,
       _ChewieControllerProvider controllerProvider) {
-     return _ChewieControllerProvider(
-      controller: widget.controller,
-      child: PlayerWithControls(isFullScreen: _isFullScreen),
+
+    return Column(
+      children: <Widget>[
+        controllerProvider,
+        Expanded(child: widget.mainPage)
+      ],
     );
   }
 
