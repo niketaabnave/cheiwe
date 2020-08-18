@@ -95,13 +95,9 @@ class ChewieState extends State<Chewie> {
       BuildContext context,
       Animation<double> animation,
       _ChewieControllerProvider controllerProvider) {
-    return Scaffold(
-      resizeToAvoidBottomPadding: true,
-      body: Container(
-        alignment: Alignment.center,
-        color: Colors.white,
-        child: controllerProvider,
-      ),
+     return _ChewieControllerProvider(
+      controller: widget.controller,
+      child: PlayerWithControls(isFullScreen: _isFullScreen),
     );
   }
 
