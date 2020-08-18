@@ -8,25 +8,44 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class PlayerWithControls extends StatelessWidget {
-  PlayerWithControls({Key key}) : super(key: key);
+  final bool isFullScreen;
+
+  PlayerWithControls({Key key, @required this.isFullScreen}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final ChewieController chewieController = ChewieController.of(context);
 
-    return
-      //Center(
-      Align(
+    return WillPopScope(
+      child: Align(
         alignment: Alignment.topCenter,
         child: Container(
-        width: MediaQuery.of(context).size.width,
-        child: AspectRatio(
-          aspectRatio:
-              chewieController.aspectRatio ?? _calculateAspectRatio(context),
-          child: _buildPlayerWithControls(chewieController, context),
+          width: MediaQuery.of(context).size.width,
+          child: AspectRatio(
+            aspectRatio:
+                chewieController.aspectRatio ?? _calculateAspectRatio(context),
+            child: _buildPlayerWithControls(chewieController, context),
+          ),
         ),
       ),
+      onWillPop: () {
+        if (!isFullScreen) {
+          Navigator.of(context).pop();
+        }
+      },
     );
+
+//    return Align(
+//      alignment: Alignment.topCenter,
+//      child: Container(
+//        width: MediaQuery.of(context).size.width,
+//        child: AspectRatio(
+//          aspectRatio:
+//              chewieController.aspectRatio ?? _calculateAspectRatio(context),
+//          child: _buildPlayerWithControls(chewieController, context),
+//        ),
+//      ),
+//    );
   }
 
   Container _buildPlayerWithControls(
