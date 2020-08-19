@@ -114,7 +114,7 @@ class ChewieState extends State<Chewie> {
     return AnimatedBuilder(
       animation: animation,
       builder: (BuildContext context, Widget child) {
-        return  _isFullScreen?_buildFullScreenVideo(context, animation, controllerProvider):_buildHalfScreenVideo(context, animation, controllerProvider);
+        return  _buildFullScreenVideo(context, animation, controllerProvider);//_isFullScreen?_buildFullScreenVideo(context, animation, controllerProvider):_buildHalfScreenVideo(context, animation, controllerProvider);
       },
     );
   }
