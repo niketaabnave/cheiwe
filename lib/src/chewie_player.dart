@@ -22,13 +22,13 @@ class Chewie extends StatefulWidget {
   Chewie({
     Key key,
     this.controller,
-    this.mainPage,
+
   })  : assert(controller != null, 'You must provide a chewie controller'),
         super(key: key);
 
   /// The [ChewieController]
   final ChewieController controller;
-  final Widget mainPage;
+
 
   @override
   ChewieState createState() {
@@ -93,18 +93,18 @@ class ChewieState extends State<Chewie> {
       ),
     );
   }
-  Widget _buildHalfScreenVideo(
-      BuildContext context,
-      Animation<double> animation,
-      _ChewieControllerProvider controllerProvider) {
-
-    return Column(
-      children: <Widget>[
-        Chewie(controller: controller,mainPage:mainPage),
-        Expanded(child: widget.mainPage)
-      ],
-    );
-  }
+//  Widget _buildHalfScreenVideo(
+//      BuildContext context,
+//      Animation<double> animation,
+//      _ChewieControllerProvider controllerProvider) {
+//
+//    return Column(
+//      children: <Widget>[
+//        Chewie(controller: controller,mainPage:mainPage),
+//        Expanded(child: widget.mainPage)
+//      ],
+//    );
+//  }
 
   AnimatedWidget _defaultRoutePageBuilder(
       BuildContext context,
