@@ -67,8 +67,8 @@ class ChewieState extends State<Chewie> {
       Navigator.of(context).pop();
       _isFullScreen = false;
     }else{
-      _isFullScreen = false;
-      await _halfFullScreenWidget(context);
+      //_isFullScreen = false;
+      //await _halfFullScreenWidget(context);
     }
   }
 
@@ -100,7 +100,7 @@ class ChewieState extends State<Chewie> {
 
     return Column(
       children: <Widget>[
-        controllerProvider,
+        Chewie(controller: controller,mainPage:mainPage),
         Expanded(child: widget.mainPage)
       ],
     );
