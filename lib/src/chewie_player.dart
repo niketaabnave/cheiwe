@@ -66,10 +66,10 @@ class ChewieState extends State<Chewie> {
     } else if (_isFullScreen) {
       Navigator.of(context).pop();
       _isFullScreen = false;
-    }else{
+    }//else{
       //_isFullScreen = false;
       //await _halfFullScreenWidget(context);
-    }
+    //}
   }
 
   @override
